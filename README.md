@@ -5,8 +5,8 @@ Daily email of remote tech jobs ranked by AI fit score. Built with n8n, Gemini a
 
 A daily email of remote tech jobs that match my skills, ranked by an AI fit score.
 
-![Workflow](images/workflow.png)
-![Sample email](images/email.png)
+![Workflow](workflow.png)
+![Sample email](email.jpeg)
 
 ## The problem
 Checking several job boards every day is slow, and most listings don't fit a junior Android/Kotlin/Python developer.
