@@ -1,0 +1,680 @@
+{
+  "name": "Tech Job Digest",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "id": "b74e2d38-4877-45d6-bfa8-5c6aefa898c4",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -752,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://weworkremotely.com/categories/remote-programming-jobs.rss",
+        "options": {}
+      },
+      "id": "0c5d7771-9148-4b14-93ff-23b8e84094e6",
+      "name": "RSS Read",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -528,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0ff3a14a-426d-4c4e-acec-fa444b1caca8",
+              "name": "id",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "7ea6dc84-fb05-4c1f-bc6c-156d3d2e94e2",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "56cfebfd-fa18-4342-9be3-58bc9dcba42f",
+              "name": "company_name",
+              "value": "={{ $json.title.split(\":\")[0].trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "e7213516-3fab-4d37-9dcf-e8f0af069a4c",
+              "name": "url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6e278326-2667-43f0-a1a7-ce0da57f2365",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -304,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://remotive.com/api/remote-jobs?category=software-dev&limit=50",
+        "options": {}
+      },
+      "id": "55d2109d-82e4-483a-93cd-aec74299f56c",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -528,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "jobs",
+        "options": {}
+      },
+      "id": "0faed963-a2d2-48d8-a9f2-93ccf1cab6ff",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1.1,
+      "position": [
+        -304,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "id": "e9ec4fda-6931-4ac9-9708-8b6758efbe59",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -80,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "6b917f78-0ee2-40c8-9b7b-e24dd978551d",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "kotlin",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "ba34efa3-2529-442f-9494-c406ef02ddea",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "python",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "fcda985d-f58a-4c24-8a7b-7f5da34588b3",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "android",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "b23aecd9-6042-4a7a-ac52-a7f0bc6e07b2",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "ai",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "bc7a8e0c-dae3-4151-9458-0598d7bba5ff",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "java",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "27c5a8b4-b22c-438c-820c-64cfe4391f1c",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "backend",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "8e2139a8-179a-4fc8-a61a-c7ab61d21334",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "automation",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "84dfc276-347e-40d0-a633-66e1e92226d3",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "junior",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "a8387106-c45e-48cb-b7b1-e56acf036f93",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "mobile",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "63150098-597a-4806-aee9-ee0d757b93b5",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "developer",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "id": "8e6e2525-bc7b-42a3-86f2-fc983ff12cb6",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.4,
+      "position": [
+        144,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "8f839350-4a2c-4549-9731-fee5629ff168",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "senior",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "fab54e2f-b883-43b1-a1ae-c83d4a7935a4",
+              "leftValue": "={{ $json.title }}",
+              "rightValue": "lead",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "id": "cc6a8efc-151b-4539-809a-19ec3d780e73",
+      "name": "Exclude Senior Roles",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.4,
+      "position": [
+        368,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "removeItemsSeenInPreviousExecutions",
+        "dedupeValue": "={{ $json.id }}",
+        "options": {}
+      },
+      "id": "32b7fabd-90f6-4ceb-ab18-6ad150525c51",
+      "name": "Remove Duplicates",
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        592,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const jobs = $input.all().map(i => i.json);\nconst list = jobs.map((j, k) => (k + 1) + '. ' + j.title + ' at ' + j.company_name).join('\\n');\nconst prompt = 'You score job listings for a junior developer with these skills: Kotlin, Jetpack Compose, Android, Java, Python, Firebase, and a mobile development internship.\\n\\nScore each job below. Reply with exactly one line per job, in the same order, in this format: \"N. Score X/10: short reason\". No other text.\\n\\n' + list;\nreturn [{ json: { prompt, jobs: jobs.map(j => ({ title: j.title, company_name: j.company_name, url: j.url })) } }];"
+      },
+      "id": "7a1c2f10-3b4d-4e5f-8a9b-0c1d2e3f4a5b",
+      "name": "Build Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "batching": {}
+      },
+      "id": "df6904f7-fd09-4337-ae62-38877e170e7d",
+      "name": "Basic LLM Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1040,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.8-flash",
+        "options": {}
+      },
+      "id": "008f2fa7-d8b9-4192-8303-f7ba710cdd09",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        272
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "eExIDRyWEaVVLzkh",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const jobs = $('Build Prompt').first().json.jobs;\nconst scoreLines = String($input.first().json.text || '').split('\\n').map(l => l.trim()).filter(Boolean);\nconst MIN_SCORE = 4;\n\nconst scored = jobs.map((j, k) => {\n  const found = scoreLines.find(l => l.startsWith((k + 1) + '.'));\n  const text = found ? found.replace(/^\\d+\\.\\s*/, '') : 'Score unavailable';\n  const m = text.match(/Score\\s*(\\d+)/i);\n  return { ...j, text, score: m ? parseInt(m[1], 10) : null };\n});\n\nconst kept = scored\n  .filter(j => j.score === null || j.score >= MIN_SCORE)\n  .sort((a, b) => (b.score ?? -1) - (a.score ?? -1));\n\nif (kept.length === 0) return [];\n\nconst lines = kept.map(j => '• ' + j.title + ' at ' + j.company_name + ' - ' + j.text + '\\n  ' + j.url);\nreturn [{ json: { digest: lines.join('\\n\\n'), count: kept.length } }];"
+      },
+      "id": "5b62bf6c-56bd-4c0d-a2c9-eb5a46f57750",
+      "name": "Code in Python",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1392,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "akelloaudrey3@gmail.com",
+        "subject": "=Tech jobs digest: {{ $json.count }} new roles",
+        "emailType": "text",
+        "message": "={{ $json.digest }}",
+        "options": {}
+      },
+      "id": "97b77e68-0e6d-426a-b7a6-380bcce55f95",
+      "name": "Send a message",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1616,
+        32
+      ],
+      "webhookId": "03c98ce2-a32b-4dd1-b58a-428718a74fc3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IpNIu5SoL98sbDWm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://remoteok.com/api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "n8n-job-digest"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -640,
+        272
+      ],
+      "id": "ee60deda-228c-4af2-8383-e71d514b525b",
+      "name": "RemoteOk"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "e6dad934-2ece-4fe3-8c94-a8f00bf86b39",
+              "leftValue": "={{ $json.position }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.4,
+      "position": [
+        -448,
+        272
+      ],
+      "id": "0cf9aa90-e01c-434f-b3c4-183748cf2145",
+      "name": "Skip Legal Notice"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "850dd56b-48bd-4627-b9b8-c368e5ebcc01",
+              "name": "=id = remoteok-{{ $json.id }}",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "2f16044f-886e-4d26-b2c2-ac5387cdd2b1",
+              "name": "=title = {{ $json.position }}",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "a1dbb84c-56c4-447f-adb5-81d9ce60824d",
+              "name": "=company_name = {{ $json.company }}",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "c08b332d-c545-42ef-8121-c50c0acf7fd7",
+              "name": "=url = {{ $json.url }}",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -272,
+        272
+      ],
+      "id": "52d4ddaf-3d18-4626-a432-ad46d673893e",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RemoteOk",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Exclude Senior Roles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Exclude Senior Roles": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in Python",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteOk": {
+      "main": [
+        [
+          {
+            "node": "Skip Legal Notice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Skip Legal Notice": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ad6b1a88-54cc-4664-ba47-c99404513288",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9a07e2fa0de131ad9c70f8151679e9d5956ff2cc85bd90a300f0e205c34ecd42"
+  },
+  "nodeGroups": [],
+  "id": "tmB0CA51RBWQj5vR",
+  "tags": []
+}
